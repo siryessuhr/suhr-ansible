@@ -1,0 +1,12 @@
+- name: Disable swap on Raspberry Pis
+  systemd:
+    name: dphys-swapfile
+    state: stopped
+    enabled: false
+  become: true
+  register: swap
+
+- name: Unconditionally reboot Pis to set swap changes
+  reboot:
+  become: true
+  when: swap.changed

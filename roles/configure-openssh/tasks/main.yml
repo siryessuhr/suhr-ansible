@@ -1,0 +1,31 @@
+- name: Set SSH protocol to 2
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    insertbefore: '.*Port.*'
+    line: 'Protocol 2'
+  become: true
+  register: protocol_change
+
+- name: Change ssh port away from 22
+  replace: 
+    path: /etc/ssh/sshd_config
+    regexp: '.*Port 22$'
+    replace: 'Port 41019'
+  become: true
+  register: port_change
+
+- name: Disable Root Login
+  replace:
+    path: /etc/ssh/sshd_config
+    regexp: '^#PermitRootLogin.*'
+    replace: 'PermitRootLogin no'
+  become: true
+  register: login_change
+
+- name: Restart ssh service for changes to take affect
+  systemd:
+    name: ssh
+    state: restarted
+    enabled: yes
+  become: true
+  when: protocol_change.changed or port_change.changed or login_change.changed

@@ -1,0 +1,14 @@
+- name: Enable cgroups for Kubernetes
+  # This will append line after \1 to the file at path
+  lineinfile:
+    path: /boot/cmdline.txt
+    backrefs: yes
+    regex: "^(.*rootwait.*)$"
+    line: '\1 cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory'
+  become: true
+  register: cgroup
+
+- name: Unconditionally reboot Pis to set boot args.
+  reboot:
+  become: true
+  when: cgroup.changed

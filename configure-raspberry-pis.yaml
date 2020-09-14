@@ -1,0 +1,20 @@
+- hosts:
+    - raspberry_pis
+  connection: local
+  gather_facts: true
+
+- name: Configure Raspberry Pis
+  hosts:
+    - raspberry_pis
+  roles:
+    - configure-openssh
+    - docker-install-raspbian
+    - disable-swap-raspbian
+    - enable-cgroups-raspbian
+    - kubernetes-install
+
+- name: Configure k8s primary node
+  hosts:
+    - pi_primary
+  roles:
+    - configure-k8s-primary-raspbian

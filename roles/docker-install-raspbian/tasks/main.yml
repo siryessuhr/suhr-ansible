@@ -1,0 +1,37 @@
+- name: Install prerequisitie Apt packages for Docker on Raspbian
+  apt:
+    name: ['raspberrypi-kernel', 'raspberrypi-kernel-headers', 'apt-transport-https', 'ca-certificates', 'curl']
+    state: present
+    update_cache: yes
+  become: true
+
+- name: Add Docker official GPG key
+  apt_key: url=https://download.docker.com/linux/raspbian/gpg
+  become: true
+
+- name: Add Docker Apt repository
+  apt_repository:
+    repo: deb [arch=armhf] https://download.docker.com/linux/raspbian stretch stable
+    state: present
+    update_cache: true
+  become: true
+
+- name: Install Docker package via Apt
+  apt:
+    name: docker-ce
+    state: latest
+    update_cache: true
+  become: true
+
+- name: Start Docker at boot
+  systemd:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Add Pi user to Docker group
+  user:
+    name: pi
+    groups: docker
+    append: yes
+  become: true

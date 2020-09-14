@@ -1,0 +1,13 @@
+all:
+  children:
+    raspberry_pis:
+      children:
+        pi_primary:
+          hosts:
+            pi-k8s-01.local
+        pi_workers:
+          hosts:
+            pi-k8s-0[2:5].local
+      vars:
+        ansible_user: pi
+        ansible_port: 41019

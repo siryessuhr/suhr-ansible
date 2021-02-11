@@ -1,0 +1,13 @@
+- name: Copy personal SSH key
+  copy:
+    src: github
+    dest: /root/.ssh/github
+    owner: root
+    group: root
+
+- name: Copy personal SSH pub key
+  copy:
+    src: github.pub
+    dest: /root/.ssh/github.pub
+    owner: root
+    group: root

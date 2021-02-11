@@ -1,6 +1,11 @@
 - name: Install zsh & keychain
   apt:
-    name: ['git','zsh', 'keychain']
+    name: ['git','zsh', 'keychain', 'python3-pip']
     state: present
     update_cache: yes
   become: true
+
+- name: Install Ansible
+  pip:
+    name: ansible
+    executable: pip3

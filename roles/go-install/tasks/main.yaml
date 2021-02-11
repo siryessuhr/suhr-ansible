@@ -1,0 +1,80 @@
+---
+# main task for go-install
+
+- name: Include tasks for clean installation (use when upgrading)
+  include_tasks: clean.yml
+  when: go_clean_install
+
+- name: Checking if go is already installed
+  stat:
+    path: '{{ go_home_parent_directory }}/go'
+  register: go_installed
+  become: yes
+
+- name: Ensure go home directory exists
+  file:
+    path: '{{ go_home_parent_directory }}/go'
+    state: directory
+  become: yes
+
+- name: Ensure go path exists
+  file:
+    path: '{{ go_path }}'
+    state: directory
+  become: yes
+
+- name: Download go tarball
+  get_url:
+    url: '{{ go_download_url }}'
+    dest: '{{ go_home_parent_directory }}/{{ go_file_name }}'
+    use_proxy: no
+  when: not go_installed.stat.exists
+  become: yes
+
+- name: Unarchive go binaries
+  unarchive:
+    src: '{{ go_home_parent_directory }}/{{ go_file_name }}'
+    dest: '{{ go_home_parent_directory }}'
+    copy: no
+  when: not go_installed.stat.exists
+  become: yes
+
+- name: Remove old path configuration
+  file:
+    path: /etc/profile.d/go.sh
+    state: absent
+  when: not go_installed.stat.exists
+  become: yes
+
+- name: Go path configuration
+  lineinfile:
+    dest: /etc/profile.d/go.sh
+    line: '{{ item.line }}'
+    create: yes
+    state: present
+  with_items:
+    - { line: 'export GOPATH={{ go_path }}' }
+    - { line: 'export PATH=$PATH:$GOPATH/bin:{{ go_home_parent_directory }}/go/bin' }
+  become: yes
+
+- name: Create a symbolic link
+  file:
+    src: '{{ go_home_parent_directory }}/go/bin/go'
+    dest: /usr/bin/go
+    state: link
+  become: yes
+
+- name: Ensure go cache directory exists
+  file:
+    path: '/home/infratest/go/pkg/mod/cache'
+    state: directory
+    recurse: yes
+    owner: infratest
+    group: infratest
+  become: yes
+
+- name: Clean Up
+  file:
+    state: absent
+    path: '{{ go_home_parent_directory }}/{{ go_file_name }}'
+  become: yes

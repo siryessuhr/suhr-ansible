@@ -11,10 +11,10 @@
     - docker-install-raspbian
     - disable-swap-raspbian
     - enable-cgroups-raspbian
-    - kubernetes-install
+    - kubeadm-install
 
 - name: Configure k8s primary node
   hosts:
     - pi_primary
   roles:
-    - configure-k8s-primary-raspbian
+    - k8s-primary-configure-raspbian

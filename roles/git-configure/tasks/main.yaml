@@ -1,0 +1,17 @@
+- name: Configure Git user.name
+  git_config:
+    name: user.name
+    scope: global
+    value: 'Daniel Suhr'
+
+- name: Configure Git user.email
+  git_config:
+    name: user.email
+    scope: global
+    value: daniel.suhr@netapp.com
+
+- name: Configure Git default Push behavior
+  git_config:
+    name: push.default
+    scope: global
+    value: simple

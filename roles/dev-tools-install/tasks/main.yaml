@@ -1,0 +1,6 @@
+- name: Install zsh & keychain
+  apt:
+    name: ['git','zsh', 'keychain']
+    state: present
+    update_cache: yes
+  become: true

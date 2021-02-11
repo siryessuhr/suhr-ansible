@@ -1,0 +1,24 @@
+- name: Install prerequisites for Helm
+  apt:
+    name: apt-transport-https
+    state: present
+    update_cache: yes
+  become: true
+
+- name: Add Helm official signing key
+  apt_key:
+    url: https://baltocdn.com/helm/signing.asc
+  become: true
+
+- name: Add Helm Apt repository
+  apt_repository:
+    repo: 'deb https://baltocdn.com/helm/stable/debian/ all main'
+    state: present
+    filename: helm-stable-debian
+    update_cache: yes
+
+- name: Install Helm
+  apt:
+    name: helm
+    update_cache: yes
+  become: true

@@ -1,0 +1,20 @@
+---
+# Cleanup for clean install of go
+
+- name: Remove go home dir
+  file:
+    path: '{{ go_home_parent_directory }}/go'
+    state: absent
+  become: yes
+
+- name: Remove go path
+  file:
+    path: '{{ go_path }}'
+    state: absent
+  become: yes
+
+- name: Remove go path configuration
+  file:
+    path: /etc/profile.d/go.sh
+    state: absent
+  become: yes

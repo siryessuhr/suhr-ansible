@@ -1,0 +1,24 @@
+- name: Install prerequisites for Kubectl
+  apt:
+    name: ['apt-transport-https', 'gnupg2', 'curl']
+    state: present
+    update_cache: yes
+  become: true
+
+- name: Add Kubectl official signing key
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+  become: true
+
+- name: Add Kubectl Apt repository
+  apt_repository:
+    repo: 'deb https://apt.kubernetes.io/ kubernetes-xenial main'
+    state: present
+    filename: kubernetes.list
+    update_cache: yes
+
+- name: Install Kubectl
+  apt:
+    name: kubectl
+    update_cache: yes
+  become: true

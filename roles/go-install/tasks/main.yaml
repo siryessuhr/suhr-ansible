@@ -71,15 +71,6 @@
     state: link
   become: yes
 
-- name: Ensure go cache directory exists
-  file:
-    path: '/home/infratest/go/pkg/mod/cache'
-    state: directory
-    recurse: yes
-    owner: infratest
-    group: infratest
-  become: yes
-
 - name: Clean Up
   file:
     state: absent

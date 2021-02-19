@@ -57,10 +57,17 @@
     - { line: 'export PATH=$PATH:$GOPATH/bin:{{ go_home_parent_directory }}/go/bin' }
   become: yes
 
-- name: Create a symbolic link
+- name: Create a go symbolic link
   file:
     src: '{{ go_home_parent_directory }}/go/bin/go'
     dest: /usr/bin/go
+    state: link
+  become: yes
+
+- name: Create a gofmt symbolic link
+  file:
+    src: '{{ go_home_parent_directory }}/go/bin/gofmt'
+    dest: /usr/bin/gofmt
     state: link
   become: yes
 

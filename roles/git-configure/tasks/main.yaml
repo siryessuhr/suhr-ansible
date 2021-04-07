@@ -8,7 +8,7 @@
   git_config:
     name: user.email
     scope: global
-    value: daniel.suhr@netapp.com
+    value: daniel.suhr@alchemer.com
 
 - name: Configure Git default Push behavior
   git_config:

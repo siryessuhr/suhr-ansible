@@ -6,7 +6,7 @@
   become: true
 
 # We copy Docker's conf over before installing Docker in order to ensure Docker picks up the correct data-dir
-# setting before we start pulling any images (such as Distbox2) which would otherwise be saved to /var/lib/docker
+# setting before we start pulling any images which would otherwise be saved to /var/lib/docker
 # when we always want it saved somewhere else (commonly /data/docker)
 - name: Ensure /etc/docker exists
   file:
@@ -17,11 +17,12 @@
     mode: 0700
   become: true
 
-- name: Deploy daemon.json to /etc/docker
-  template:
-    src: daemon.json.j2
-    dest: /etc/docker/daemon.json
-  become: true
+# # Keeping just in case I ever need a custom Docker deployment
+# - name: Deploy daemon.json to /etc/docker
+#   template:
+#     src: daemon.json.j2
+#     dest: /etc/docker/daemon.json
+#   become: true
 
 - name: Add Docker official signing key
   apt_key:
@@ -39,6 +40,7 @@
     state: present
     filename: docker
     update_cache: yes
+  become: true
 
 - name: Install Docker
   apt:

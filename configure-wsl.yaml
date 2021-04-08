@@ -1,10 +1,10 @@
 - name: Configure WSL
+  hosts: all
   roles:
     - docker-install
-    - helm-install
-    - kubectl-install
     - go-install
     - dev-tools-install
+    - git-configure
     - role: gantsign.oh-my-zsh
       users:
        - username: root

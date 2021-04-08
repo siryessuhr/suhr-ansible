@@ -5,6 +5,7 @@
     - go-install
     - dev-tools-install
     - git-configure
+    - aws-cli-install
     - role: gantsign.oh-my-zsh
       users:
        - username: root

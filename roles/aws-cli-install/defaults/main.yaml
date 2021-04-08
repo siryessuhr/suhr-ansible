@@ -1,0 +1,5 @@
+---
+aws_cli_home_parent_directory: /usr/local
+aws_cli_file_name: awscliv2.zip
+aws_cli_download_url: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
+aws_cli_clean_install: false

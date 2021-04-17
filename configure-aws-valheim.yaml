@@ -1,0 +1,5 @@
+- name: Configure AWS Lightsail Instance for Valheim
+  hosts: all
+  roles:
+    - docker-install
+    - install-valheim-docker

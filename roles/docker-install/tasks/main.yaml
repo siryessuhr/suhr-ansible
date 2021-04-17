@@ -5,17 +5,18 @@
     update_cache: yes
   become: true
 
-# We copy Docker's conf over before installing Docker in order to ensure Docker picks up the correct data-dir
-# setting before we start pulling any images which would otherwise be saved to /var/lib/docker
-# when we always want it saved somewhere else (commonly /data/docker)
-- name: Ensure /etc/docker exists
-  file:
-    path: /etc/docker
-    state: directory
-    owner: root
-    group: root
-    mode: 0700
-  become: true
+# # Keeping just in case I ever need a custom Docker deployment
+# # We copy Docker's conf over before installing Docker in order to ensure Docker picks up the correct data-dir
+# # setting before we start pulling any images which would otherwise be saved to /var/lib/docker
+# # when we always want it saved somewhere else (commonly /data/docker)
+# - name: Ensure /etc/docker exists
+#   file:
+#     path: /etc/docker
+#     state: directory
+#     owner: root
+#     group: root
+#     mode: 0700
+#   become: true
 
 # # Keeping just in case I ever need a custom Docker deployment
 # - name: Deploy daemon.json to /etc/docker
@@ -45,5 +46,11 @@
 - name: Install Docker
   apt:
     name: ['docker-ce', 'docker-ce-cli', 'containerd.io']
+    update_cache: yes
+  become: true
+
+- name: Install Docker Compose
+  apt:
+    name: 'docker-compose'
     update_cache: yes
   become: true

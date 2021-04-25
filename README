@@ -1,4 +1,4 @@
 Ansible is cool and you should use it to automate infrastructure management of any kind.
 
-To run localhost:
+To run a playbook (like the WSL play) against localhost:
 `ansible-playbook --ask-become-pass -i inventories/localhost.yaml configure-wsl.yaml` which will prompt for your local password.

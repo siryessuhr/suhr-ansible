@@ -8,10 +8,10 @@ services:
       - 2458:2458/udp
     environment:
       - PORT=2456
-      - NAME="{{ valheim-server-name }}"
-      - WORLD="{{ valheim-world-name }}"
-      - PASSWORD="{{ valheim-server-password }}"
-      - TZ=America/Denver
+      - NAME="{{ valheim_server_name }}"
+      - WORLD="{{ valheim_world_name }}"
+      - PASSWORD="{{ valheim_server_password }}"
+      - TZ=America/Los_Angeles
       - PUBLIC=1
       - AUTO_UPDATE=1
       - AUTO_UPDATE_SCHEDULE="0 1 * * *"

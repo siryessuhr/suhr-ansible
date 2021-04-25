@@ -1,0 +1,13 @@
+- name: Install Valheim Docker Compose file
+  template:
+    src: docker-compose.yaml.j2
+    dest: "{{ docker_compose_path }}"
+
+- name: Add ubuntu user to Docker group
+  user:
+    name: ubuntu
+    groups: docker
+  become: true
+
+- name: Start Valheim via docker compose
+  shell: docker-compose up
